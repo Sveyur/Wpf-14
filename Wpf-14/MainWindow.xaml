@@ -1,0 +1,64 @@
+﻿<Window x:Class="Wpf_14.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_14"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="500" x:Name="This">
+    <Window.Resources>
+        <DataTemplate x:Key="sps">
+            <Border x:Name="border" BorderBrush="Red" BorderThickness="2" Padding="5" Margin="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock  Grid.Column="0" Grid.Row="0" Text="Название товара:" />
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=ProductName}" />
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Цена товара" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=ProductPrice}" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Изображение товара" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Grid.Row="2" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="40" Height="40" >
+                        <Border Width="40" Height="40">
+                          <Image Source="{Binding Path=ProductImage}"/>
+                        </Border>
+                    </TextBlock>
+
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Категория товара"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=ProductCategory}" />
+                </Grid>
+            </Border>
+            <DataTemplate.Triggers >
+                <DataTrigger Binding="{Binding Path=ProductCategory}">
+                    <DataTrigger.Value>
+                        <local:ProductCategories>Еда</local:ProductCategories>
+                    </DataTrigger.Value>
+                    <Setter TargetName="border" Property="BorderBrush" Value="DodgerBlue"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=ProductCategory}">
+                    <DataTrigger.Value>
+                        <local:ProductCategories>Одежда</local:ProductCategories>
+                    </DataTrigger.Value>
+                    <Setter TargetName="border" Property="BorderBrush" Value="Coral"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=ProductCategory}">
+                    <DataTrigger.Value>
+                        <local:ProductCategories>БытоваяТехника</local:ProductCategories>
+                    </DataTrigger.Value>
+                    <Setter TargetName="border" Property="BorderBrush" Value="DeepPink"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Window.Resources>
+    <StackPanel>
+        <TextBlock Name="title" FontSize="30" FontWeight="Bold" FontFamily="Verdana" FontStyle="Italic" Text="Товар"/>
+        <ListBox Name="product" Margin="10" Width="400" ItemTemplate="{StaticResource sps}" HorizontalContentAlignment="Stretch"/>
+    </StackPanel>
+</Window>
